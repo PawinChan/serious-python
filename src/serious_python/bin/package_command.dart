@@ -264,7 +264,15 @@ class PackageCommand extends Command {
       // install requirements
       if (requirements.isNotEmpty && !skipSitePackages) {
         String? sitePackagesRoot;
-
+          
+        requirements = requirements.map((r) {
+            if (r.startsWith(",")) { 
+              return r.substring(1);
+            } else {
+              return r;
+            }
+          }).toList(); 
+          
         if (platform != "Pyodide") {
           if (Platform.environment
               .containsKey(sitePackagesEnvironmentVariable)) {
